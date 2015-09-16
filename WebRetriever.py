@@ -9,7 +9,7 @@ log = Logger.getLogger("WebRetriever")
 class WebRetriever():
     def make_request(self,str_url):
         log.debug("Make Query: {url}".format(url=str_url))
-        html_raw = requests.get(str_url,verify=False)
+        html_raw = requests.get(str_url,verify=False,cookies={'over18':'1'})
         html_raw.encoding = 'utf-8'
         return BeautifulSoup(html_raw.text)
 
