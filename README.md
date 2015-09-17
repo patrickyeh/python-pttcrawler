@@ -1,10 +1,10 @@
 # python-pttcrawler
 
-## Installation:
+## Installation
 ```shell
 pip install pttcrawler
 ```
-## Usage:
+## Usage
 #####Get board instance:
 ```python
 from pttcrawler.Board import Board
