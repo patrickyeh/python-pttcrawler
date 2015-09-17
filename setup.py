@@ -2,14 +2,14 @@ __author__ = 'Vetom'
 
 from setuptools import setup
 
-setup(name='python-pttcrawler',
-      version='0.1.0',
-      description='Data Lab API for Python',
+setup(name='pttcrawler',
+      version='0.1.2',
+      description='A stream crawler for ptt',
       author='Patrick Yeh',
       author_email='vetom198@gmail.com',
       install_requires=['requests','BeautifulSoup'],
       url='https://github.com/patrickyeh/python-pttcrawler',
-      packages=['PTTCrawler'],
+      packages=['pttcrawler'],
       classifiers=[
           'Development Status :: 3 - Alpha',
           'Intended Audience :: Developers',
