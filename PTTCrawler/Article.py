@@ -1,11 +1,16 @@
 # coding=utf-8
 __author__ = 'PatrickYeh'
-from Page import Page
+import Global as gv
+import Logger
 from BeautifulSoup import BeautifulSoup
+from Page import Page
+
 ARTICLE_BASE_URL = 'https://www.ptt.cc/bbs/{board_id}/{article_id}.html'
 
+log = Logger.getLogger("Article")
+
 class Article(Page):
-    def __init__(self,board_id="Gossiping",article_id="M.1442337186.A.9C1",lazy=False):
+    def __init__(self,board_id="Gossiping",article_id="M.1442460766.A.DC0",lazy=False):
         self.article_id = article_id
         self.board_id = board_id
         self.dict_element = {}
@@ -27,22 +32,25 @@ class Article(Page):
             if stop_tag :
                 if u"※ 發信站:" in stop_tag.string:
                     #retrieve IPAddress
-                    pass
+                    #detect content end
+                    break
             lst_content.append(str(content))
         self.dict_element['content'] = '\n'.join(lst_content)
 
-    def test(self):
-        lst_content = []
-        for content in self.html_raw_soup.find("div",attrs={"id":"main-content"}).contents[4:]:
-            stop_tag = BeautifulSoup(str(content)).find('span',attrs={'class':'f2'})
-            if stop_tag :
-                if u"※ 發信站:" in stop_tag.string:
-                    #should get IP Address
-                    break
-            lst_content.append(str(content))
-        print '\n'.join(lst_content)
+        #fetch push
+        self.dict_element['reply'] = []
+        for push in self.html_raw_soup.findAll("div",attrs={"class":"push"}):
+            lst_push_content = [''.join([str(str_tag).strip() for str_tag in item.contents]) for item in push.contents]
+            lst_push = lst_push_content
+            dict_push = {}
+            dict_push['type'] = gv.DICT_PUSH_MAPPING[lst_push[0]]
+            dict_push['user'] = lst_push[1]
+            dict_push['content'] = lst_push[2]
+            dict_push['reply_time'] = lst_push[3]
+            self.dict_element['reply'].append(dict_push)
 
-    def get_element(self,element_id):
+
+    def _get_element(self,element_id):
         if self.dict_element.has_key(element_id):
             return self.dict_element[element_id]
         else:
@@ -54,17 +62,20 @@ class Article(Page):
 
     @property
     def title(self):
-        return self.get_element('title')
+        return self._get_element('title')
 
     @property
     def publish_time(self):
-        return self.get_element('publish_time')
+        return self._get_element('publish_time')
 
     @property
     def author(self):
-        return self.get_element('author')
+        return self._get_element('author')
 
     @property
     def content(self):
-        return self.get_element('content')
+        return self._get_element('content')
 
+    @property
+    def reply_list(self):
+        return self._get_element('reply')

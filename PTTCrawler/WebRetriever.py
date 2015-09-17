@@ -2,8 +2,10 @@
 __author__ = 'Vetom'
 
 import requests
-import Logger
 from BeautifulSoup import BeautifulSoup
+
+from PTTCrawler import Logger
+
 log = Logger.getLogger("WebRetriever")
 
 class WebRetriever():

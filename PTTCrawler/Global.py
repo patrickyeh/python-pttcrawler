@@ -1,0 +1,12 @@
+# coding=utf-8
+__author__ = 'Vetom'
+
+PUSH_TAG_LIKE = "推"
+PUSH_TAG_NEUTRAL = "→"
+PUSH_TAG_UNLIKE = "噓"
+
+DICT_PUSH_MAPPING = {
+    PUSH_TAG_LIKE:"LIKE",
+    PUSH_TAG_NEUTRAL:"NEUTRAL",
+    PUSH_TAG_UNLIKE:"UNLIKE"
+}
