@@ -3,10 +3,10 @@ __author__ = 'PatrickYeh'
 
 import re
 
-from PTTCrawler import Logger
-from PTTCrawler.WebRetriever import WebRetriever
-from PTTCrawler.Page import Page
-from PTTCrawler.Article import Article
+from pttcrawler import Logger
+from pttcrawler.WebRetriever import WebRetriever
+from pttcrawler.Page import Page
+from pttcrawler.Article import Article
 from BeautifulSoup import BeautifulSoup
 log = Logger.getLogger("PttBoard")
 
