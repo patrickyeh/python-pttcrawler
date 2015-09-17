@@ -3,7 +3,7 @@ __author__ = 'Vetom'
 from setuptools import setup
 
 setup(name='pttcrawler',
-      version='0.1.5',
+      version='0.1.6',
       description='A stream crawler for ptt',
       author='Patrick Yeh',
       author_email='vetom198@gmail.com',
