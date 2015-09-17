@@ -4,7 +4,7 @@ __author__ = 'Vetom'
 import requests
 from BeautifulSoup import BeautifulSoup
 
-from PTTCrawler import Logger
+from pttcrawler import Logger
 
 log = Logger.getLogger("WebRetriever")
 
