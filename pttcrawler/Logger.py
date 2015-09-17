@@ -19,7 +19,7 @@ def getLogger(loggerName = 'PttCrawler'):
     objFileHandler.setFormatter(objFormat)
     log.addHandler(objFileHandler)
     log.addHandler(objStreamHandler)
-    log.setLevel(logging.DEBUG)
+    log.setLevel(logging.INFO)
     try:
         os.chmod(strLogPath, 0777)
     except:

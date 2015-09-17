@@ -17,19 +17,28 @@ class Article(Page):
         if not lazy:
             self._parse()
 
+    def refresh(self):
+        self._parse()
+
     def _parse(self):
         self.html_raw_soup = self._fetch_data(self.url)
         lst_top_element = self.html_raw_soup.findAll("span",attrs={"class":"article-meta-value"})
-
-        self.dict_element['author'] = lst_top_element[0].string
-        self.dict_element['title'] = lst_top_element[2].string
-        self.dict_element['publish_time'] = lst_top_element[3].string
+        try:
+            self.dict_element['author'] = lst_top_element[0].string
+            self.dict_element['title'] = lst_top_element[2].string
+            self.dict_element['publish_time'] = lst_top_element[3].string
+        except:
+            log.error(lst_top_element)
 
         #fetch article content
         lst_content = []
         for content in self.html_raw_soup.find("div",attrs={"id":"main-content"}).contents[4:]:
             stop_tag = BeautifulSoup(str(content)).find('span',attrs={'class':'f2'})
+
             if stop_tag :
+                if stop_tag.string == None:
+                    continue
+
                 if u"※ 發信站:" in stop_tag.string:
                     #retrieve IPAddress
                     #detect content end

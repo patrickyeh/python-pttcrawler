@@ -17,15 +17,21 @@ class Board(Page):
     def __init__(self,board_id="Gossiping"):
         self.base_url = 'https://www.ptt.cc/bbs/{board_id}/index{page_idx}.html'
         self.board_id = board_id
+        self.refresh()
+
+    def refresh(self):
         self.html_raw_soup = self._fetch_data(self.url)
 
     def _article_list_iter(self,lst_article_idx):
         for article_idx in lst_article_idx:
             yield Article(board_id=self.board_id,article_id=article_idx)
 
-    def get_topN_page_article_list(self,n_page):
+    def get_articles(self,lst_article_list):
+        return self._article_list_iter(lst_article_list)
+
+    def get_topN_page_article_idx_list(self,n_page):
         lst_article_idx = self.get_article_id_list_by_range(start_page=self.num_page-n_page,end_page=self.num_page,desc=True)
-        return self._article_list_iter(lst_article_idx)
+        return lst_article_idx
 
     def get_article_id_list_by_range(self,start_page=1,end_page=10,desc=True):
         if start_page <= 0 or end_page > self.num_page:
