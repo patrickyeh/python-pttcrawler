@@ -1,6 +1,7 @@
 __author__ = 'PatrickYeh'
 
 import receiver
+import pickle
 from pttcrawler import Logger
 from kafka import SimpleProducer, KafkaClient
 
@@ -18,7 +19,8 @@ class kafka_producer(receiver.receiver):
 
     def send(self,obj_data):
         log.debug("Broadcast Data")
-        self.producer.send_messages(self.topic,str(obj_data))
+
+        self.producer.send_messages(self.topic,obj_data)
 
 class article_producer(kafka_producer):
     def __init__(self):
