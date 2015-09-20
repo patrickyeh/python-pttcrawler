@@ -1,5 +1,5 @@
 __author__ = 'PatrickYeh'
-import threading,time,pickle
+import threading,time,pickle,json
 from pttcrawler import Logger
 from pttcrawler.Board import Board
 from pttcrawler.Article import Article
@@ -44,7 +44,7 @@ class article_monitor(monitor):
         dict_data['content'] = self.obj_article.content
         # print dict_data
 
-        self.send("ptt_article",str(dict_data))
+        self.send("ptt_article",json.dumps(dict_data))
 
     def run(self):
         self.send_article_info()
@@ -57,7 +57,7 @@ class article_monitor(monitor):
                 for reply in self.obj_article.reply_list[int_pre_reply_length:int_cur_reply_length-1]:
                     reply['article_id'] = self.article_id
                     reply['board_id'] = self.board_id
-                    self.send("ptt_reply",pickle.dumps(reply))
+                    self.send("ptt_reply",json.dumps(reply))
 
             int_pre_reply_length = int_cur_reply_length
 
@@ -69,7 +69,7 @@ class board_monitor(monitor):
         threading.Thread.__init__(self)
         monitor.__init__(self)
         self.board_id = board_id
-        self.top_n_page = 3
+        self.top_n_page = 2
 
     def set_top_n_page(self,top_n_page):
         self.top_n_page = top_n_page
