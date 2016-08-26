@@ -32,18 +32,22 @@ class Article(Page):
 
         #fetch article content
         lst_content = []
-        for content in self.html_raw_soup.find("div",attrs={"id":"main-content"}).contents[4:]:
-            stop_tag = BeautifulSoup(str(content)).find('span',attrs={'class':'f2'})
+        article_content_obj = self.html_raw_soup.find("div",attrs={"id":"main-content"})
+        if article_content_obj == None:
+            log.debug("Retrieve content tags error")
+        else:
+            for content in article_content_obj.contents[4:]:
+                stop_tag = BeautifulSoup(str(content)).find('span',attrs={'class':'f2'})
 
-            if stop_tag :
-                if stop_tag.string == None:
-                    continue
+                if stop_tag :
+                    if stop_tag.string == None:
+                        continue
 
-                if u"※ 發信站:" in stop_tag.string:
-                    #retrieve IPAddress
-                    #detect content end
-                    break
-            lst_content.append(str(content))
+                    if u"※ 發信站:" in stop_tag.string:
+                        #retrieve IPAddress
+                        #detect content end
+                        break
+                lst_content.append(str(content))
         self.dict_element['content'] = '\n'.join(lst_content)
 
         #fetch push

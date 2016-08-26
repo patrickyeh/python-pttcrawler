@@ -102,9 +102,9 @@ class board_monitor(monitor):
 
 if __name__ == '__main__':
     obj_article_receiver = kafka_producer.article_producer()
-    obj_article_receiver.set_kafka_client("192.168.68.128","6667")
+    obj_article_receiver.set_kafka_client("spark","6667")
     obj_reply_receiver = kafka_producer.reply_producer()
-    obj_reply_receiver.set_kafka_client("192.168.68.128","6667")
+    obj_reply_receiver.set_kafka_client("spark","6667")
     obj_board_monitor = board_monitor('Gossiping')
     obj_board_monitor.set_receiver("ptt_article",obj_article_receiver)
     obj_board_monitor.set_reply_receiver(obj_reply_receiver)

@@ -5,7 +5,9 @@ import requests,time
 from BeautifulSoup import BeautifulSoup
 from pttcrawler import Logger
 
+
 requests.packages.urllib3.disable_warnings()
+
 log = Logger.getLogger("WebRetriever")
 
 class WebRetriever():
@@ -17,7 +19,8 @@ class WebRetriever():
                 html_raw = requests.get(str_url,verify=False,cookies={'over18':'1'})
                 html_raw.encoding = 'utf-8'
                 bool_pass = True
-            except:
+            except Exception as e:
+                log.error("URL:{url} - ERROR: {err}".format(url=str_url,err=e))
                 time.sleep(2)
 
         return BeautifulSoup(html_raw.text)
@@ -25,9 +28,9 @@ class WebRetriever():
 
 if __name__ == '__main__':
     data = WebRetriever().make_request('https://www.ptt.cc/bbs/joke/index.html')
+    print data
     import re
     PAGE_REG = ".*index(?P<page_num>\d*).html"
     pattern = re.compile(PAGE_REG)
-
-    page_num = data.find("div",attrs= {"class":"btn-group pull-right"}).findAll("a")[1]["href"]
+    page_num = data.find("div",attrs= {"class":"btn-group btn-group-paging"}).findAll("a")[1]["href"]
     print pattern.match(page_num).group("page_num")

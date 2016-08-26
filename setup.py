@@ -3,13 +3,13 @@ __author__ = 'Vetom'
 from setuptools import setup
 
 setup(name='pttcrawler',
-      version='0.1.8',
+      version='0.2.0',
       description='A stream crawler for ptt',
       author='Patrick Yeh',
       author_email='vetom198@gmail.com',
-      install_requires=['requests','BeautifulSoup'],
+      install_requires=['requests','BeautifulSoup','kafka-python'],
       url='https://github.com/patrickyeh/python-pttcrawler',
-      packages=['pttcrawler'],
+      packages=['pttcrawler','pttcrawler.stream'],
       classifiers=[
           'Development Status :: 3 - Alpha',
           'Intended Audience :: Developers',

@@ -3,7 +3,7 @@ __author__ = 'PatrickYeh'
 import receiver
 import pickle
 from pttcrawler import Logger
-from kafka import SimpleProducer, KafkaClient
+from kafka import KafkaProducer
 
 log = Logger.getLogger("kafka_producer")
 
@@ -12,15 +12,14 @@ class kafka_producer(receiver.receiver):
         self.topic = "Message"
 
     def set_kafka_client(self,host,port):
-        self.kafka_client = KafkaClient("{host}:{port}".format(host=host,port=port))
-        self.producer = SimpleProducer(self.kafka_client)
+        self.producer = KafkaProducer(bootstrap_servers="{host}:{port}".format(host=host,port=port))
     def set_topic(self,topic):
         self.topic = topic
 
     def send(self,obj_data):
         log.debug("Broadcast Data")
 
-        self.producer.send_messages(self.topic,obj_data)
+        self.producer.send(self.topic,obj_data)
 
 class article_producer(kafka_producer):
     def __init__(self):

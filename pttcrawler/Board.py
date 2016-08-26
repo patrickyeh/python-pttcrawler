@@ -79,7 +79,7 @@ class Board(Page):
     @property
     def num_page(self):
         log.debug("Fetch number of page")
-        prefix_url = self.html_raw_soup.find("div",attrs= {"class":"btn-group pull-right"}).findAll("a")[1]["href"]
+        prefix_url = self.html_raw_soup.find("div",attrs= {"class":"btn-group btn-group-paging"}).findAll("a")[1]["href"]
         pattern = re.compile(PAGE_REG)
         page_num = int(pattern.match(prefix_url).group("page_num"))
         return page_num + 1
